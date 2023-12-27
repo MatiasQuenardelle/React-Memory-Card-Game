@@ -7,6 +7,7 @@ export default function MemoryGameApp() {
   const [pokemons, setPokemons] = useState([])
   const [clickedPokemons, setClickedPokemons] = useState(new Set())
   const [score, setScore] = useState(0)
+  const [highestScore, setHighestScore] = useState(0)
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -78,6 +79,9 @@ export default function MemoryGameApp() {
     const pokemonId = clickedCard.getAttribute("data-pokemon-id")
     if (clickedPokemons.has(pokemonId)) {
       alert("You clicked the same pokemon twice ! Game Over")
+      if (score > highestScore) {
+        setHighestScore(score)
+      }
       setScore(0)
       setClickedPokemons(new Set())
       setPokemons(shufflePokemons([...pokemons]))
@@ -98,6 +102,10 @@ export default function MemoryGameApp() {
         <div className="score">
           <p>Score:</p>
           {score}
+        </div>
+        <div className="highestScore">
+          <p>Highest Score:</p>
+          {highestScore}
         </div>
       </div>
       <div className="cardsGrid">
